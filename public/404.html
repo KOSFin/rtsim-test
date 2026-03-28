@@ -6,26 +6,24 @@
     <script>
       // Redirect unknown paths to index.html while preserving SPA route info.
       // 1 segment is kept because this app is hosted as /rtsim-test/.
-      const pathSegmentsToKeep = 1
-
-      const { location } = window
-      const newUrl =
-        location.protocol +
+      const pathSegmentsToKeep = 1;
+      var l = window.location;
+      var newUrl =
+        l.protocol +
         '//' +
-        location.hostname +
-        (location.port ? ':' + location.port : '') +
-        location.pathname
+        l.hostname +
+        (l.port ? ':' + l.port : '') +
+        l.pathname
           .split('/')
           .slice(0, 1 + pathSegmentsToKeep)
           .join('/') +
         '/?/' +
-        location.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/') +
-        (location.search
-          ? '&' + location.search.slice(1).replace(/&/g, '~and~')
+        l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/') +
+        (l.search
+          ? '&' + l.search.slice(1).replace(/&/g, '~and~')
           : '') +
-        location.hash
-
-      location.replace(newUrl)
+        l.hash;
+      window.location.replace(newUrl);
     </script>
   </head>
   <body></body>
