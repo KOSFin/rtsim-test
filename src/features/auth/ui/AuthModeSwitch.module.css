@@ -1,0 +1,13 @@
+.switchText {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.link {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}

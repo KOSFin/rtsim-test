@@ -1,0 +1,41 @@
+import { Navigate, useParams } from 'react-router-dom'
+import { APP_ROUTES } from '../../app/routes'
+import { AuthForm } from '../../features/auth/ui/AuthForm'
+import { useRef, useLayoutEffect, useState } from 'react'
+import { AuthModeSwitch } from '../../features/auth/ui/AuthModeSwitch'
+import { isAuthMode } from '../../features/auth/model/authMode'
+import styles from './AuthPage.module.css'
+
+export function AuthPage() {
+  const { mode } = useParams<{ mode: string }>()
+
+  if (!isAuthMode(mode)) {
+    return <Navigate to={APP_ROUTES.authLogin} replace />
+  }
+
+  const formRef = useRef<HTMLDivElement>(null)
+  const [formHeight, setFormHeight] = useState<number | undefined>(undefined)
+
+  useLayoutEffect(() => {
+    if (formRef.current) {
+      setFormHeight(formRef.current.scrollHeight)
+    }
+  }, [mode])
+
+  return (
+    <main className={styles.page}>
+      <section className={styles.card}>
+        <h1 className={styles.title}>{mode === 'login' ? 'Вход' : 'Регистрация'}</h1>
+        <div
+          className={styles.animatedForm}
+          style={{ height: formHeight ? formHeight + 'px' : undefined }}
+        >
+          <div ref={formRef}>
+            <AuthForm mode={mode} />
+          </div>
+        </div>
+        <AuthModeSwitch mode={mode} />
+      </section>
+    </main>
+  )
+}

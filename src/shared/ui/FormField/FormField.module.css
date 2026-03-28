@@ -1,0 +1,79 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.control {
+  position: relative;
+  border: 1px solid #d5d8de;
+  border-radius: 12px;
+  background: #ffffff;
+  transition: border-color 0.2s ease;
+}
+
+.controlAttachedBottom {
+  border-radius: 12px 12px 0 0;
+}
+
+.control:focus-within {
+  border-color: #0f766e;
+}
+
+.controlError,
+.controlError:focus-within {
+  border-color: #dc2626;
+}
+
+.controlWithAdornment .input {
+  padding-right: 2.65rem;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-radius: inherit;
+  padding: 1.05rem 0.8rem 0.55rem;
+  font: inherit;
+  color: #0f172a;
+  background: transparent;
+  outline: none;
+}
+
+.floatingLabel {
+  position: absolute;
+  left: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-origin: left top;
+  color: #64748b;
+  padding: 0 0.25rem;
+  background: #ffffff;
+  pointer-events: none;
+  transition: all 0.18s ease;
+}
+
+.input:focus + .floatingLabel,
+.input:not(:placeholder-shown) + .floatingLabel {
+  top: 0;
+  transform: translateY(-50%) scale(0.84);
+  color: #475569;
+}
+
+.adornment {
+  position: absolute;
+  right: 0.45rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active {
+  -webkit-text-fill-color: #0f172a;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
