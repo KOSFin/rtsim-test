@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { APP_ROUTES } from '../../../app/routes'
 import { login, register } from '../../../entities/auth/api/authApi'
@@ -55,6 +55,12 @@ export function useAuthForm(mode: AuthMode) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const submitLabel = mode === 'login' ? 'Войти' : 'Зарегистрироваться'
+
+  useEffect(() => {
+    setErrors({})
+    setValidationMessage('')
+    setServerError('')
+  }, [mode])
 
   function updateField(field: keyof AuthFormValues, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }))
