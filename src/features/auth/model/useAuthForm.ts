@@ -53,8 +53,6 @@ export function useAuthForm(mode: AuthMode) {
   const [validationMessage, setValidationMessage] = useState<string>('')
   const [serverError, setServerError] = useState<string>('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [validationSignature, setValidationSignature] = useState('')
-  const [validationStep, setValidationStep] = useState(0)
 
   const submitLabel = mode === 'login' ? 'Войти' : 'Зарегистрироваться'
 
@@ -63,8 +61,6 @@ export function useAuthForm(mode: AuthMode) {
     setServerError('')
     setValidationMessage('')
     setErrors({})
-    setValidationSignature('')
-    setValidationStep(0)
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -83,17 +79,8 @@ export function useAuthForm(mode: AuthMode) {
     setValidationMessage('')
 
     if (validationQueue.length > 0) {
-      const nextSignature = validationQueue
-        .map((item) => `${item.field}:${item.message}`)
-        .join('|')
-      const nextStep =
-        nextSignature === validationSignature
-          ? Math.min(validationStep + 1, validationQueue.length - 1)
-          : 0
-      const currentValidationError = validationQueue[nextStep]
+      const currentValidationError = validationQueue[0]
 
-      setValidationSignature(nextSignature)
-      setValidationStep(nextStep)
       setErrors({
         [currentValidationError.field]: currentValidationError.message,
       })
@@ -120,8 +107,6 @@ export function useAuthForm(mode: AuthMode) {
 
       setErrors({})
       setValidationMessage('')
-      setValidationSignature('')
-      setValidationStep(0)
       setValues(INITIAL_AUTH_VALUES)
     } catch (error) {
       setServerError(getServerErrorMessage(error))

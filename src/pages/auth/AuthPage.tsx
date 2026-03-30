@@ -21,10 +21,21 @@ export function AuthPage() {
   const [formHeight, setFormHeight] = useState<number | undefined>(undefined)
 
   useLayoutEffect(() => {
-    if (formRef.current) {
-      setFormHeight(formRef.current.scrollHeight)
+    if (!formRef.current) return
+
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const height = (entry.target as HTMLElement).scrollHeight
+        setFormHeight(height)
+      }
+    })
+
+    observer.observe(formRef.current)
+
+    return () => {
+      observer.disconnect()
     }
-  }, [mode])
+  }, [])
 
   return (
     <main className={styles.page} aria-labelledby="auth-page-title">

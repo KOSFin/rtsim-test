@@ -21,7 +21,7 @@
   transition: height 0.35s cubic-bezier(.4,1,.4,1);
   overflow: hidden;
   will-change: height;
-  overflow: visible;
+  margin: -0.5rem -0.25rem -0.25rem;
 }
 
 .title {
