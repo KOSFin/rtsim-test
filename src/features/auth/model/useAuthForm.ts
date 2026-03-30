@@ -1,4 +1,6 @@
 import { useState, type FormEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { APP_ROUTES } from '../../../app/routes'
 import { login, register } from '../../../entities/auth/api/authApi'
 import { HttpError } from '../../../shared/api/httpClient'
 import type { AuthMode } from './authMode'
@@ -45,6 +47,7 @@ function getServerErrorMessage(error: unknown): string {
 }
 
 export function useAuthForm(mode: AuthMode) {
+  const navigate = useNavigate()
   const [values, setValues] = useState<AuthFormValues>(INITIAL_AUTH_VALUES)
   const [errors, setErrors] = useState<AuthFormErrors>({})
   const [validationMessage, setValidationMessage] = useState<string>('')
@@ -109,8 +112,10 @@ export function useAuthForm(mode: AuthMode) {
 
       if (mode === 'login') {
         await login(payload)
+        navigate(APP_ROUTES.authSuccess, { replace: true })
       } else {
         await register(payload)
+        navigate(`${APP_ROUTES.authLogin}?registered=1`, { replace: true })
       }
 
       setErrors({})

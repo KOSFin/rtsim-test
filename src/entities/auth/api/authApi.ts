@@ -9,7 +9,7 @@ async function sleep(ms: number): Promise<void> {
 }
 
 async function mockAuth(payload: AuthPayload, mode: 'login' | 'register') {
-  await sleep(500)
+  await sleep(1000)
 
   if (mode === 'register' && payload.email.endsWith('@exists.test')) {
     throw new HttpError('Пользователь с таким email уже существует', 409)

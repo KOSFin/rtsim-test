@@ -11,14 +11,16 @@ export function AuthModeSwitch({ mode }: AuthModeSwitchProps) {
   const isLogin = mode === 'login'
 
   return (
-    <p className={styles.switchText}>
-      {isLogin ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
-      <Link
-        className={styles.link}
-        to={isLogin ? APP_ROUTES.authRegister : APP_ROUTES.authLogin}
-      >
-        {isLogin ? 'Зарегистрироваться' : 'Войти'}
-      </Link>
-    </p>
+    <nav aria-label={isLogin ? 'Переход к регистрации' : 'Переход ко входу'}>
+      <p className={styles.switchText}>
+        {isLogin ? 'Нет аккаунта? ' : 'Уже есть аккаунт? '}
+        <Link
+          className={styles.link}
+          to={isLogin ? APP_ROUTES.authRegister : APP_ROUTES.authLogin}
+        >
+          {isLogin ? 'Зарегистрироваться' : 'Войти'}
+        </Link>
+      </p>
+    </nav>
   )
 }
